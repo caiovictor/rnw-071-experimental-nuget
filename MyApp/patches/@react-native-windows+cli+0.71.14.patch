@@ -1,0 +1,46 @@
+diff --git a/node_modules/@react-native-windows/cli/lib-commonjs/runWindows/utils/autolink.js b/node_modules/@react-native-windows/cli/lib-commonjs/runWindows/utils/autolink.js
+index a0497b1..3f3da2a 100644
+--- a/node_modules/@react-native-windows/cli/lib-commonjs/runWindows/utils/autolink.js
++++ b/node_modules/@react-native-windows/cli/lib-commonjs/runWindows/utils/autolink.js
+@@ -395,22 +395,25 @@ class AutolinkWindows {
+                 });
+             });
+         }
+-        const csModuleNames = this.getCSModules();
+-        if (csModuleNames.length > 0) {
+-            // Add managed projects
+-            projectsForSolution.push({
+-                projectFile: path_1.default.join(rnwRoot, 'Microsoft.ReactNative.Managed/Microsoft.ReactNative.Managed.csproj'),
+-                projectName: 'Microsoft.ReactNative.Managed',
+-                projectLang: 'cs',
+-                projectGuid: '{F2824844-CE15-4242-9420-308923CD76C3}',
+-            });
+-            projectsForSolution.push({
+-                projectFile: path_1.default.join(rnwRoot, 'Microsoft.ReactNative.Managed.CodeGen//Microsoft.ReactNative.Managed.CodeGen.csproj'),
+-                projectName: 'Microsoft.ReactNative.Managed.CodeGen',
+-                projectLang: 'cs',
+-                projectGuid: '{ADED4FBE-887D-4271-AF24-F0823BCE7961}',
+-                projectTypeGuid: vstools.dotNetCoreProjectTypeGuid,
+-            });
++        const config = this.getWindowsConfig();
++        if(!config.experimentalFeatures.UseExperimentalNuget) {
++            const csModuleNames = this.getCSModules();
++            if (csModuleNames.length > 0) {
++                // Add managed projects
++                projectsForSolution.push({
++                    projectFile: path_1.default.join(rnwRoot, 'Microsoft.ReactNative.Managed/Microsoft.ReactNative.Managed.csproj'),
++                    projectName: 'Microsoft.ReactNative.Managed',
++                    projectLang: 'cs',
++                    projectGuid: '{F2824844-CE15-4242-9420-308923CD76C3}',
++                });
++                projectsForSolution.push({
++                    projectFile: path_1.default.join(rnwRoot, 'Microsoft.ReactNative.Managed.CodeGen//Microsoft.ReactNative.Managed.CodeGen.csproj'),
++                    projectName: 'Microsoft.ReactNative.Managed.CodeGen',
++                    projectLang: 'cs',
++                    projectGuid: '{ADED4FBE-887D-4271-AF24-F0823BCE7961}',
++                    projectTypeGuid: vstools.dotNetCoreProjectTypeGuid,
++                });
++            }
+         }
+         verboseMessage(`Calculating ${chalk_1.default.bold(path_1.default.basename(solutionFile))} changes...`, this.options.logging);
+         let changesNecessary = false;
